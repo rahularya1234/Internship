@@ -1,5 +1,7 @@
 const express =require('express');
-const multer =require('multer');
+require('dotenv').config();
+
+// const multer =require('multer');
 const app=express();
 const cors = require('cors');
 require("./db/db");
@@ -16,6 +18,7 @@ app.use(cors({
 }));
 app.options('*', cors());
 app.use(require('./routes/Item'));  
+app.use(require('./routes/user'));
 
 // app.use("/", (req,res)=>{
 //     res.status(200).send("hiii");

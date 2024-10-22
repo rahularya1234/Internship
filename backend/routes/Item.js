@@ -43,7 +43,6 @@ router.post("/Item", upload.single('emage'), async (req, res) => {
     }
 });
 
-module.exports = router;
 
 
 router.get("/Item", async(req,res)=>{
@@ -78,8 +77,8 @@ router.get("/Item/:id", async(req,res)=>{
         res.status(200).send(data);
     }catch(error){
         res.status(500).json({error:"server error", details: error.message});
-
-
+        
+        
     }
     
 })
@@ -88,7 +87,7 @@ router.patch("/Item/:id", async(req,res) =>{
     try {
         const id = req.params.id;
         const data = await Item.findByIdAndUpdate(id,req.body, { new: true })
-
+        
         if(data) {
             res.status(200).json({message: "data updated"})
         }
@@ -100,6 +99,7 @@ router.patch("/Item/:id", async(req,res) =>{
     }
 })
 
+module.exports = router;
 
 
 

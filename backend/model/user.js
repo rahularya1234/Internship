@@ -1,27 +1,41 @@
-const mongoose =require('mongoose');
-const UserSchema=new mongoose.Schema({
-    name:{
-        type:String,
-        require:true
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+const UserSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  tokens: [
+    {
+      token: {
+        type: String,
+        required: true,
+      },
     },
-    email:{
-        type:String,
-        require:true
-    },
-    phone:{
-        type:String,
-        require:true
-    },
-    password:{
-        type:String,
-        require:true
-    }
-})
-UserSchema.pre('save',async function(next){
-    if(this.isModified('password')){
-        this.password=await bycrypt.hash(this.password,12);
-    }
-    next();
-})
+  ],
+});
+UserSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 12);
+  }
+  next();
+});
+
 const user = mongoose.model("users", UserSchema);
 module.exports = user;
